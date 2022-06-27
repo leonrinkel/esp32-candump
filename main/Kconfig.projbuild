@@ -1,0 +1,67 @@
+menu "CANdump config"
+
+    orsource "$IDF_PATH/examples/common_components/env_caps/$IDF_TARGET/Kconfig.env_caps"
+
+    config CAN_XCVR_RX_GPIO
+        int "CAN transceiver RX GPIO pin"
+        default 33
+        help
+            This option selects the GPIO pin used for the RX signal of the CAN transceiver.
+
+    config CAN_XCVR_TX_GPIO
+        int "CAN transceiver TX GPIO pin"
+        default 32
+        help
+            This option selects the GPIO pin used for the TX signal of the CAN transceiver.
+
+    choice CAN_BAUDRATE
+        prompt "CAN baudrate"
+        default CAN_BAUDRATE_500_KBITS
+        help
+            The baudrate to be used for CAN communication.
+
+        config CAN_BAUDRATE_1_MBITS
+            bool "1 Mbit/s"
+        config CAN_BAUDRATE_800_KBITS
+            bool "800 kbit/s"
+        config CAN_BAUDRATE_500_KBITS
+            bool "500 kbit/s"
+        config CAN_BAUDRATE_250_KBITS
+            bool "250 kbit/s"
+        config CAN_BAUDRATE_125_KBITS
+            bool "125 kbit/s"
+        config CAN_BAUDRATE_100_KBITS
+            bool "100 kbit/s"
+        config CAN_BAUDRATE_50_KBITS
+            bool "50 kbit/s"
+        config CAN_BAUDRATE_25_KBITS
+            bool "25 kbit/s"
+    endchoice
+
+    config CAN_RX_LED
+        bool "Flash LED when CAN frame received"
+        default y
+        help
+            This option enables flashing of a LED when a CAN frame is received.
+
+    config CAN_RX_LED_GPIO
+        int "GPIO pin for LED to flash when CAN frame received."
+        default 16
+        depends on CAN_RX_LED
+        help
+            This option selects the GPIO pin used for flashing a LED when a CAN frame is received.
+
+    choice CAN_RX_LED_LEVEL
+        prompt "RX LED active level"
+        default CAN_RX_LED_LEVEL_ACTIVE_LOW
+        depends on CAN_RX_LED
+        help
+            Whether the LED turns on for high or for low GPIO output level.
+
+        config CAN_RX_LED_LEVEL_ACTIVE_LOW
+            bool "Active low"
+        config CAN_RX_LED_LEVEL_ACTIVE_HIGH
+            bool "Active high"
+    endchoice
+
+endmenu
